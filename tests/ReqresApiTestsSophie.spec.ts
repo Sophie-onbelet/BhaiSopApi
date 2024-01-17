@@ -1,6 +1,6 @@
-import { test, expect, request } from "@playwright/test";
+import { test, expect } from "@playwright/test";
 import reqresUser from "../jsons/user.json";
-import { User, CreateUser } from '../api/Interfaces';
+import { User, CreateUser } from '../api/InterfacesReqres';
 
   test("Exercise 1: Retrieve a List of Users @Sophie @API", async ({ request }) => {
     const response = await request.get('https://reqres.in/api/users');
@@ -20,14 +20,14 @@ import { User, CreateUser } from '../api/Interfaces';
 
 
   test("Exercise 3: Create a New User @Sophie @API", async ({ request }) => {
-    const user = {
-      name: "Sophie",
-      job: "Queen",
-    };
-    const response = await request.post(`https://reqres.in/api/users`, {
-      data: user,
-    });
-    expect(response.ok()).toBeTruthy();
+      const user = {
+        name: "Sophie",
+        job: "Queen",
+      };
+      const response = await request.post(`https://reqres.in/api/users`, {
+        data: user,
+      });
+      expect(response.ok()).toBeTruthy();
 
     const parsedResponse = await response.json();
     const myUser: CreateUser = parsedResponse;

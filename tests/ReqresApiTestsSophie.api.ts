@@ -1,6 +1,6 @@
 import { test, expect, request } from "@playwright/test";
 import reqresUser from "../jsons/user.json";
-import { User, CreateUser } from '../api/Interfaces';
+import { User, CreateUser } from '../api/InterfacesReqres';
 
   test("Exercise 1: Retrieve a List of Users @Sophie @API", async ({ request }) => {
     const response = await request.get('https://reqres.in/api/users');
