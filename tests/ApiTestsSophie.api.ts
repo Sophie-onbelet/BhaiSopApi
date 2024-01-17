@@ -3,20 +3,19 @@ import reqresUser from "../jsons/user.json";
 import { User, CreateUser } from '../api/Interfaces';
 
   test("Exercise 1: Retrieve a List of Users @Sophie @API", async ({ request }) => {
-    const response = await request.get(
-      `${process.env.REQRES_API}/users?page=2`
-    );
+    const response = await request.get('https://reqres.in/api/users');
     expect(response.ok()).toBeTruthy();
 
-     const parsedResponse = await response.json();
-    const myUserData: User = parsedResponse['data'];
-    expect(myUserData).toEqual(reqresUser);
   });
 
 
   test("Exercise 2: Retrieve a Specific User @Sophie @API", async ({ request }) => {
-    const response = await request.get(`${process.env.REQRES_API}/users/2`);
+    const response = await request.get(`https://reqres.in/api/users/2`);
     expect(response.ok()).toBeTruthy();
+
+    const parsedResponse = await response.json();
+    const myUserData: User = parsedResponse['data'];
+    expect(myUserData).toEqual(reqresUser);
   });
 
 
@@ -25,7 +24,7 @@ import { User, CreateUser } from '../api/Interfaces';
       name: "Sophie",
       job: "Queen",
     };
-    const response = await request.post(`${process.env.REQRES_API}/users`, {
+    const response = await request.post(`https://reqres.in/api/users`, {
       data: user,
     });
     expect(response.ok()).toBeTruthy();
@@ -44,7 +43,7 @@ import { User, CreateUser } from '../api/Interfaces';
         name: "Tony",
         job: "barking",
       };
-      const response = await request.put(`${process.env.REQRES_API}/users/2`, {
+      const response = await request.put(`https://reqres.in/api/users/2`, {
         data: user,
       });
       expect(response.ok()).toBeTruthy();
