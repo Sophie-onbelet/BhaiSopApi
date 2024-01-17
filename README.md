@@ -67,3 +67,71 @@ Steps:
 - Perform a GET request for each page.
 - Verify that the response status code is 200.
 - Check the response body for the list of users on each page.
+
+
+**EXERCISES INTERMEDIATE**
+**Exercise 1: Authentication**
+Objective: Test API endpoints that require authentication.
+
+Steps:
+
+- Explore the endpoints that require authentication (e.g., /api/login, /api/protected).
+- Send a POST request to /api/login with valid credentials and verify that you get a successful response.
+- Use the authentication token received from the login response to access the protected endpoint /api/protected.
+- Verify that the protected resource is accessible with the authentication token.
+- Test with invalid credentials and ensure that the API returns the appropriate error response.
+
+**Exercise 2: Query Parameters**
+Objective: Test endpoints that use query parameters.
+
+Steps:
+
+- Explore an endpoint that supports query parameters (e.g., /api/users?page=2).
+- Test different values for query parameters (e.g., change the page number, include/exclude optional parameters).
+- Verify that the response reflects the changes based on the query parameters.
+- Test edge cases, such as using large page numbers or invalid values.
+
+**Exercise 3: Error Handling**
+Objective: Test how the API handles errors.
+
+Steps:
+
+- Intentionally send a request to a non-existing endpoint (e.g., /api/nonexistent).
+- Verify that the API returns a proper 404 Not Found response.
+- Send a request with invalid parameters (e.g., missing required parameters).
+- Verify that the API returns the appropriate error response with a meaningful error message.
+- Test rate limiting by sending requests at a high frequency and ensure the API returns the expected rate-limiting response.
+
+**Exercise 4: File Upload**
+Objective: Test file upload functionality.
+
+Steps:
+
+- Find an endpoint that supports file uploads (e.g., /api/users/{user_id}/avatar).
+- Send a POST request with a file attached (image, text file, etc.).
+- Verify that the file is successfully uploaded.
+- Test with different file types and sizes.
+- Attempt to upload a file with an incorrect format and verify the error response.
+
+**Exercise 5: Response Validation**
+Objective: Validate the structure and data in API responses.
+
+Steps:
+
+- Define a JSON schema for the expected response of an endpoint (e.g., user details).
+- Perform a request to the endpoint and validate the response against the defined schema.
+- Check if all expected fields are present in the response.
+- Verify that data types are correct (e.g., numeric fields are numbers, date fields are in the correct format).
+- Test scenarios where the response may contain optional or conditional fields.
+
+**Exercise 6: Performance Testing**
+Objective: Test the API’s performance under different scenarios.
+
+Steps:
+
+- Send a series of requests in quick succession to test the API’s responsiveness.
+- Measure and analyze the response times for different endpoints.
+- Test with varying payload sizes to assess how the API handles larger amounts of data.
+- Use tools like Apache JMeter or Locust to simulate multiple users accessing the API concurrently.
+- Monitor the API’s response time, throughput, and error rates during performance testing.
+- Remember to use appropriate tools and techniques to accomplish these exercises. Adjust the parameters, payloads, and scenarios -   based on your understanding of the API’s documentation and behavior.
