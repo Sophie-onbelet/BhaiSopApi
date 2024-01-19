@@ -1,6 +1,7 @@
 import { test, expect } from "@playwright/test";
 import path from "path";
 import fs from "fs";
+import { Pet } from "../api/InterfacesPetStore";
 
 test("Exercise 1: Authentication", async ({ request }) => {
   //Send a POST request to /api/login with valid credentials and verify that you get a successful response.
@@ -71,24 +72,45 @@ test("Exercise 4: File Upload", async ({ request }) => {
 });
 
 test("Exercise 5: Response Validation", async ({ request }) => {
-    //Define a JSON schema for the expected response of an endpoint (e.g., user details).
-  const pet = {
-    id: 1412,
-    category: {
-      id: 1412,
-      name: "Tony"
-    }}
-    //Perform a request to the endpoint and validate the response against the defined schema.
+  // Perform a request to the endpoint
+  const response = await request.get("https://petstore.swagger.io/v2/pet/1412");
 
-    const response = await request.get(
-    "https://petstore.swagger.io/v2/api/pet"
-  );
-    //Check if all expected fields are present in the response.
-  console.log(response);
-      //Verify that data types are correct (e.g., numeric fields are numbers, date fields are in the correct format).
-    //Test scenarios where the response may contain optional or conditional fields.
+  // Parse the response body as JSON
+  const responseBody: Pet = await response.json();
+
+  // Validate the response against the TypeScript interface
+  expect(responseBody).toStrictEqual({
+    id: expect.any(Number),
+    category: {
+      id: expect.any(Number),
+      name: expect.any(String),
+    },
+    name: expect.any(String),
+    photoUrls: expect.any(Array),
+    tags: expect.any(Array),
+    status: expect.any(String),
+  });
+
+  // Check if all expected fields are present in the response
+  expect(responseBody.id).toBe(1412);
+  expect(responseBody.category.id).toBe(1412);
+  expect(responseBody.category.name).toBe("Tony");
+
+  // Verify that data types are correct (additional checks can be added based on the schema)
+  expect(typeof responseBody.id).toBe("number");
+  expect(typeof responseBody.category.id).toBe("number");
+  expect(typeof responseBody.category.name).toBe("string");
+  expect(typeof responseBody.name).toBe("string");
+  expect(Array.isArray(responseBody.photoUrls)).toBe(true);
+  expect(Array.isArray(responseBody.tags)).toBe(true);
+  expect(typeof responseBody.status).toBe("string");
+
+  // Additional tests for optional or conditional fields can be added as needed
+
+  // Check the status code
   expect(response.status()).toBe(200);
 });
+
 
 test("Exercise 6: Performance Testing", async ({ request }) => {
     //Send a series of requests in quick succession to test the API’s responsiveness.
