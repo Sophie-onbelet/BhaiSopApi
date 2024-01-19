@@ -1,5 +1,6 @@
 import { test, expect } from "@playwright/test";
 import path from "path";
+import fs from "fs";
 
 test("Exercise 1: Authentication", async ({ request }) => {
   //Send a POST request to /api/login with valid credentials and verify that you get a successful response.
@@ -28,7 +29,7 @@ test("Exercise 2: Query Parameters", async ({ request }) => {
     ],
     status: "available",
   };
-  const response = await request.post(`https://petstore.swagger.io/v2`, {
+  const response = await request.post(`https://petstore.swagger.io/v2/pet`, {
     data: pet,
   });
   expect(response.ok()).toBeTruthy();
@@ -43,13 +44,29 @@ test("Exercise 3: Error Handling", async ({ request }) => {
 });
 
 test("Exercise 4: File Upload", async ({ request }) => {
-    //Find an endpoint that supports file uploads (e.g., /api/users/{user_id}/avatar).
-    //Send a POST request with a file attached (image, text file, etc.).
-    //Verify that the file is successfully uploaded.
-    //Test with different file types and sizes.
-    //Attempt to upload a file with an incorrect format and verify the error response.
-    const file = path.resolve("petstorefile/PicturePet.JPG");
-    const response = await request.post("https://petstore.swagger.io/v2/pet/{petId}/uploadImage");
+    const PETID = 12321;
+   
+    const fileName = path.resolve("/Users/sophieonbelet/BhaiSopApi-1/petstorefile/", "PicturePet.JPG"); // Give the complete path starts from User, here in directory("/petstorefile/") without file name.
+    const myFile = fs.readFileSync(fileName);
+ 
+    const apiResponse = await request.post(`https://petstore.swagger.io/v2/pet/${PETID}/uploadImage`,{
+    headers:{
+        Accept: "*/*",
+        ContentType: "multipart/form-data",
+    },
+    multipart: {
+        file: {
+            name: 'PicturePet.jpg',
+            mimeType: 'image/jpg',
+            buffer: myFile,
+          }
+      }
+    });
+    const body = JSON.parse(await apiResponse.text());
+    await console.log("Show me request : "+apiResponse.json());
+    console.log(apiResponse.text());
+    expect((await apiResponse).status()).toBe(200);
+    console.log(body);
 
 });
 
@@ -64,7 +81,7 @@ test("Exercise 5: Response Validation", async ({ request }) => {
     //Perform a request to the endpoint and validate the response against the defined schema.
 
     const response = await request.get(
-    "https://petstore.swagger.io/v2/api/nonexistent"
+    "https://petstore.swagger.io/v2/api/pet"
   );
     //Check if all expected fields are present in the response.
   console.log(response);
