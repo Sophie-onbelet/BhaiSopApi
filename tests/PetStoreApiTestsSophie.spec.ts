@@ -4,16 +4,22 @@ import fs from "fs";
 import { Pet } from "../api/InterfacesPetStore";
 
 test("Exercise 1: Authentication", async ({ request }) => {
-  //Send a POST request to /api/login with valid credentials and verify that you get a successful response.
-  //Use the authentication token received from the login response to access the protected endpoint /api/protected.
-  //Verify that the protected resource is accessible with the authentication token.
-  //Test with invalid credentials and ensure that the API returns the appropriate error response.
+  const loginResponse = await request.post('https://demoqa.com/Account/v1/Authorized', {
+    data: {
+      userName: 'TonyBobonie',
+      password: 'Perro123!',
+    },
+  });
+
+  // Check if the login request was successful
+  expect(loginResponse.ok()).toBeTruthy();
+
+  // Use the loginResponse to perform further assertions
+  const responseData = await loginResponse.json();
+  console.log(responseData);
 });
 
 test("Exercise 2: Query Parameters", async ({ request }) => {
-  //Test different values for query parameters (e.g., change the page number, include/exclude optional parameters).
-  //Verify that the response reflects the changes based on the query parameters.
-  //Test edge cases, such as using large page numbers or invalid values.
   const pet = {
     id: 0,
     category: {
