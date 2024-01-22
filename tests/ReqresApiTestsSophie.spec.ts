@@ -57,6 +57,12 @@ import { User, CreateUser } from '../api/InterfacesReqres';
   
 
   test("Exercise 6: Pagination @Sophie @API", async ({ request }) => {
-    const response = await request.delete('https://reqres.in/api/users/2')
-    expect(response.status()).toBe(204)
+    const page1 = 'https://reqres.in/api/users?page=1'
+    const page2 = 'https://reqres.in/api/users?page=2'
+    const response1 = await request.get(page1)
+    const response2 = await request.get(page2)
+    expect(response1.status()).toBe(200)
+    expect(response2.status()).toBe(200)
+    console.log(await response1.json())
+    console.log(await response2.json())
 });

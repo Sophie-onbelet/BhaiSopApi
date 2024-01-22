@@ -20,29 +20,24 @@ test("Exercise 1: Authentication", async ({ request }) => {
 });
 
 test("Exercise 2: Query Parameters", async ({ request }) => {
-  const pet = {
-    id: 0,
-    category: {
-      id: 0,
-      name: "string",
-    },
-    name: "doggie",
-    photoUrls: ["string"],
-    tags: [
-      {
-        id: 0,
-        name: "string",
-      },
-    ],
-    status: "available",
-  };
-  const response = await request.post(`https://petstore.swagger.io/v2/pet`, {
-    data: pet,
-  });
-  expect(response.ok()).toBeTruthy();
+  //Test different values for query parameters
+  const page1 = 'https://reqres.in/api/users?page=1'
+  const page2 = 'https://reqres.in/api/users?page=2'
+  const pageunkown = 'https://reqres.in/api/users/23'
+  const response1 = await request.get(page1)
+  const response2 = await request.get(page2)
+  const response3 = await request.get(pageunkown)
+  //Verify that the response reflects the changes based on the query parameters
+  expect(response1.status()).toBe(200)
+  expect(response2.status()).toBe(200)
+  expect(response3.status()).toBe(404)
+  console.log(await response1.json())
+  console.log(await response2.json())
+  console.log(await response3.json())
 });
 
 test("Exercise 3: Error Handling", async ({ request }) => {
+  //Verify that the API returns 404
   const response = await request.get(
     "https://petstore.swagger.io/v2/api/nonexistent"
   );
@@ -55,7 +50,7 @@ test("Exercise 4: File Upload", async ({ request }) => {
    
     const fileName = path.resolve("/Users/sophieonbelet/BhaiSopApi-1/petstorefile/", "PicturePet.JPG"); // Give the complete path starts from User, here in directory("/petstorefile/") without file name.
     const myFile = fs.readFileSync(fileName);
- 
+   // Send a POST request with a file attached 
     const apiResponse = await request.post(`https://petstore.swagger.io/v2/pet/${PETID}/uploadImage`,{
     headers:{
         Accept: "*/*",
@@ -73,6 +68,7 @@ test("Exercise 4: File Upload", async ({ request }) => {
     await console.log("Show me request : "+apiResponse.json());
     console.log(apiResponse.text());
     expect((await apiResponse).status()).toBe(200);
+    //Verify that the file is successfully uploaded
     console.log(body);
 
 });
@@ -110,8 +106,6 @@ test("Exercise 5: Response Validation", async ({ request }) => {
   expect(Array.isArray(responseBody.photoUrls)).toBe(true);
   expect(Array.isArray(responseBody.tags)).toBe(true);
   expect(typeof responseBody.status).toBe("string");
-
-  // Additional tests for optional or conditional fields can be added as needed
 
   // Check the status code
   expect(response.status()).toBe(200);
