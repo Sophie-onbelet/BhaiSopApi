@@ -4,15 +4,15 @@ export interface Pet {
       id: 0,
       name: "string"
     },
-    name: "doggie",
+    name: "string",
     photoUrls: [
       "string"
     ],
     tags: [
       {
-        id: 0,
+        id: number,
         name: "string"
       }
     ],
-    status: "available"
+    status: "string"
   }

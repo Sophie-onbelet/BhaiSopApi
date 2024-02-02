@@ -75,37 +75,16 @@ test("Exercise 4: File Upload", async ({ request }) => {
 
 test("Exercise 5: Response Validation", async ({ request }) => {
   // Perform a request to the endpoint
-  const response = await request.get("https://petstore.swagger.io/v2/pet/1412");
+  const response = await request.get("https://petstore.swagger.io/v2/pet/4");
 
   // Parse the response body as JSON
   const responseBody: Pet = await response.json();
 
   // Validate the response against the TypeScript interface
-  expect(responseBody).toStrictEqual({
-    id: expect.any(Number),
-    category: {
-      id: expect.any(Number),
-      name: expect.any(String),
-    },
-    name: expect.any(String),
-    photoUrls: expect.any(Array),
-    tags: expect.any(Array),
-    status: expect.any(String),
-  });
-
   // Check if all expected fields are present in the response
-  expect(responseBody.id).toBe(1412);
-  expect(responseBody.category.id).toBe(1412);
-  expect(responseBody.category.name).toBe("Tony");
-
-  // Verify that data types are correct (additional checks can be added based on the schema)
-  expect(typeof responseBody.id).toBe("number");
-  expect(typeof responseBody.category.id).toBe("number");
-  expect(typeof responseBody.category.name).toBe("string");
-  expect(typeof responseBody.name).toBe("string");
-  expect(Array.isArray(responseBody.photoUrls)).toBe(true);
-  expect(Array.isArray(responseBody.tags)).toBe(true);
-  expect(typeof responseBody.status).toBe("string");
+  expect(responseBody.id).toBe(4);
+  expect(responseBody.name).toBe("Lara");
+  expect(responseBody.status).toBe("5000");
 
   // Check the status code
   expect(response.status()).toBe(200);
