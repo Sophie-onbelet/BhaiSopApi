@@ -48,7 +48,7 @@ test("Exercise 3: Error Handling", async ({ request }) => {
 test("Exercise 4: File Upload", async ({ request }) => {
     const PETID = 12321;
    
-    const fileName = path.resolve("/Users/sophieonbelet/BhaiSopApi-1/petstorefile/", "PicturePet.JPG"); // Give the complete path starts from User, here in directory("/petstorefile/") without file name.
+    const fileName = path.resolve("petstorefile/", "PicturePet.JPG"); // Give the complete path starts from User, here in directory("/petstorefile/") without file name.
     const myFile = fs.readFileSync(fileName);
    // Send a POST request with a file attached 
     const apiResponse = await request.post(`https://petstore.swagger.io/v2/pet/${PETID}/uploadImage`,{
