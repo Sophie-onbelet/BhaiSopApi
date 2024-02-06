@@ -84,7 +84,7 @@ test("Exercise 5: Response Validation", async ({ request }) => {
   // Check if all expected fields are present in the response
   expect(responseBody.id).toBe(4);
   expect(responseBody.name).toBe("Johnie");
-  expect(responseBody.status).toBe("5000");
+  expect(responseBody.status).toBe("available");
 
   // Check the status code
   expect(response.status()).toBe(200);
