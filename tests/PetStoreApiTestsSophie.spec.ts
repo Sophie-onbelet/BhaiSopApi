@@ -83,7 +83,7 @@ test("Exercise 5: Response Validation", async ({ request }) => {
   // Validate the response against the TypeScript interface
   // Check if all expected fields are present in the response
   expect(responseBody.id).toBe(4);
-  expect(responseBody.name).toBe("Lara");
+  expect(responseBody.name).toBe("Johnie");
   expect(responseBody.status).toBe("5000");
 
   // Check the status code
