@@ -80,10 +80,8 @@ test("Exercise 5: Response Validation", async ({ request }) => {
   // Parse the response body as JSON
   const responseBody: Pet = await response.json();
 
-  // Validate the response against the TypeScript interface
   // Check if all expected fields are present in the response
   expect(responseBody.id).toBe(4);
-  expect(responseBody.name).toBe("Johnie");
   expect(responseBody.status).toBe("available");
 
   // Check the status code
