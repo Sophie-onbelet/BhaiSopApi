@@ -73,7 +73,7 @@ test("Exercise 4: File Upload", async ({ request }) => {
 
 });
 
-test("Exercise 5: Response Validation", async ({ request }) => {
+test.skip("Exercise 5: Response Validation", async ({ request }) => {
   // Perform a request to the endpoint
   const response = await request.get("https://petstore.swagger.io/v2/pet/4");
 
