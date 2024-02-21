@@ -1,4 +1,4 @@
-name: Node.js CI
+name: Playwright Tests CI
 
 on:
   push:
@@ -10,16 +10,12 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment: 
-      name: cisecret
 
     strategy:
       matrix:
         node-version: [20.x]
 
     steps:
-      - name: Clear npm cache
-        run: npm cache clean --force
       - uses: actions/checkout@v4
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
@@ -29,3 +25,10 @@ jobs:
       - run: npm ci
       - run: npx playwright install --with-deps
       - run: npx playwright test
+
+      # Upload test results as artifacts
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v4.3.1
+        with:
+          name: test-results
+          path: test-results
